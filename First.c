@@ -17,16 +17,38 @@ int y = 0;
 
 
 int get_inputs();
-
 void print_matrix();
+int Check_Similarities();
 
 
 
 int main()
 {
 
-	get_inputs();
+	get_inputs();   // Getting inputs Turning to capitals And storing in words and matrix matrices
 	
+	if (impossible == 1)
+	{
+		printf("IMPOSSIBLE\n");
+		return 0;
+	}
+
+	if (Check_Similarities() > 0)
+	{
+ 			// Words components are similar
+
+	}
+
+
+	else
+
+	{
+
+
+
+		// Words' components aren't similar
+
+	}
 	
 	
 	print_matrix();
@@ -100,6 +122,11 @@ int get_inputs()
 
 			}
 
+			if (strlen(line) > sizeOfthePuzzle && flag1 == 1)
+			{
+				impossible = 1;
+			}
+
 			for (int n = 0; n < sizeOfthePuzzle; n++)
 				{
 					if (line[n] >= 65 && line[n] <= 90)
@@ -138,10 +165,15 @@ int get_inputs()
 			y++;
 		}
 
+		if (noOfWords > sizeOfthePuzzle)
+		{
+			impossible = 1;
+			return 0;
+		}
+
+
+
 	}
-
-	
-
 
 	return 0;
 
@@ -156,16 +188,15 @@ void print_matrix()
 	printf("Size of the matrix is  =  %d\n",sizeOfthePuzzle);
 	printf("%d\n%d\n%d\n",noOfWords,x,y);
 
+
 	for (int m = 0; m < sizeOfthePuzzle; m++)
 	{
 		for (int n = 0; n < sizeOfthePuzzle; n++)
 		{
 			printf("%d",matrix[m][n]);
-			//printf("Go");
-
+			
 		}
 		printf("\n");
-		//printf("Go2\n");
 
 	}
 
@@ -173,22 +204,50 @@ void print_matrix()
 	for (int m = 1; m <= noOfWords; m++)
 	{
 
-		
-			printf("%s",words[m]);
-			//printf("GO1\n");
-
-		
-		//printf("\n");
-
+		printf("%s",words[m]);
+				
 	}
 
 
 }
 
 
+int Check_Similarities()
+{
+	int similar = 0;
+
+	for (int m = 0; m < noOfWords - 1; m++)
+	{
+		for (int n , k = 0; n < strlen(words[m]), k < strlen(words[m+1]); n++, k++)
+		{
+
+			if (words[m][n] == words[m+1][k])
+			{
+				similar ++;
+
+			}
+		}
+	}
+
+	return similar;
+
+}
 
 
 
+
+void No_Similar_Words()
+{
+
+
+}
+
+
+void Similar_Words()
+{
+
+
+}
 
 
 
