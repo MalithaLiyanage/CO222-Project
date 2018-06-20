@@ -7,11 +7,16 @@
 
 int impossible = 0;
 int matrix[10][10];
+char printMatrix[10][10];
 char words[10][10];
 int sizeOfthePuzzle;
 int noOfWords = 0;
 int x;
 int y = 0;
+
+
+int rowVacant;
+int coloumnVacant;
 
 
 
@@ -238,6 +243,58 @@ int Check_Similarities()
 
 void No_Similar_Words()
 {
+	int m;
+	int n;
+
+
+
+	for (m = 0; m < sizeOfthePuzzle; m++)
+	{
+		for (n = 0; n < sizeOfthePuzzle; n++)
+		{
+
+			if (matrix[m][n] == 1)
+			{
+
+				for(int k = n,i = m; k < sizeOfthePuzzle, i < sizeOfthePuzzle; k++, i++)
+				{
+
+					if (matrix[m][k] == 1)
+					{
+						rowVacant ++;
+					}
+
+					if (matrix[i][n] == 1)
+					{
+						coloumnVacant ++;
+					}
+
+
+				}
+
+				for (int l = 0; l < noOfWords; l++)
+				{
+					for (int j = 0; j < sizeOfthePuzzle; j++)
+					{
+
+						if (coloumnVacant >= strlen(words[l]))
+						{
+							printMatrix[m][n] = words[l][n];
+						}
+					}
+					
+				}
+
+
+			}
+
+
+		}
+
+
+	}
+
+
 
 
 }
@@ -245,6 +302,8 @@ void No_Similar_Words()
 
 void Similar_Words()
 {
+
+	
 
 
 }
