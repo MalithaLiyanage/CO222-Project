@@ -15,8 +15,8 @@ int x;
 int y = 0;
 
 
-int rowVacant;
-int coloumnVacant;
+int rowVacant = 1;
+int coloumnVacant = 1;
 
 
 
@@ -24,6 +24,7 @@ int coloumnVacant;
 int get_inputs();
 void print_matrix();
 int Check_Similarities();
+void No_Similar_Words();
 
 
 
@@ -49,7 +50,7 @@ int main()
 
 	{
 
-
+		No_Similar_Words();
 
 		// Words' components aren't similar
 
@@ -127,9 +128,12 @@ int get_inputs()
 
 			}
 
-			if (strlen(line) > sizeOfthePuzzle && flag1 == 1)
+			if (strlen(line) - 1 > sizeOfthePuzzle && flag1 == 1)
 			{
 				impossible = 1;
+				printf("go1");
+				printf("Line Length : %ld\n",strlen(line));
+				printf("Size of the puzzle : %d\n",sizeOfthePuzzle);
 			}
 
 			for (int n = 0; n < sizeOfthePuzzle; n++)
@@ -269,21 +273,36 @@ void No_Similar_Words()
 						coloumnVacant ++;
 					}
 
-
-				}
-
-				for (int l = 0; l < noOfWords; l++)
-				{
-					for (int j = 0; j < sizeOfthePuzzle; j++)
+					if (rowVacant > 1)
 					{
 
-						if (coloumnVacant >= strlen(words[l]))
-						{
-							printMatrix[m][n] = words[l][n];
-						}
 					}
+					else if (coloumnVacant > 1)
+					{
+
+						for (int l = 0; l < noOfWords; l++)
+						{
+							for (int j = 0, p = m; j < strlen(words[l]), p < strlen(words[l]); j++,p++)
+							{
+
+								if (coloumnVacant >= strlen(words[l]))
+								{
+									printMatrix[p][n] = words[l][j];
+								}
+
+							}
 					
+						}
+
+					} 
+
+
+
 				}
+				printf("Row : %d\n",rowVacant);
+				printf("Column : %d\n",coloumnVacant);
+
+				
 
 
 			}
