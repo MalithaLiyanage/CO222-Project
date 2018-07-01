@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 
 
-
+char newWords[10][10];
 
 
 int impossible = 0;
@@ -11,8 +13,16 @@ char printMatrix[10][10];
 char words[10][10];
 int sizeOfthePuzzle;
 int noOfWords = 0;
-int x;
+//int x;
 int y = 0;
+
+
+char tempWord[10];
+int done = 0;
+	
+int counter = 0;
+
+
 
 
 int rowVacant = 1;
@@ -25,6 +35,7 @@ int get_inputs();
 void print_matrix();
 int Check_Similarities();
 void No_Similar_Words();
+void Sorting_Word_List();
 
 
 
@@ -39,6 +50,20 @@ int main()
 		return 0;
 	}
 
+
+	for (int m = 0; m < sizeOfthePuzzle; m++)
+	{
+		for (int n = 0; n < sizeOfthePuzzle; n++)
+		{
+			
+				printMatrix[m][n] = '*';
+				
+			
+		}
+	}
+
+
+
 	if (Check_Similarities() > 0)
 	{
  			// Words components are similar
@@ -49,10 +74,24 @@ int main()
 	else
 
 	{
+		Sorting_Word_List();
 
 		No_Similar_Words();
 
-		// Words' components aren't similar
+													// Words' components aren't similar
+
+		printf("Printing Matrix\n");
+
+		for (int m = 0; m < sizeOfthePuzzle; m++)
+		{
+			for (int n = 0; n < sizeOfthePuzzle; n++)
+			{
+				printf("%c",printMatrix[m][n]);
+				
+			}
+			printf("\n");
+
+		}
 
 	}
 	
@@ -74,8 +113,6 @@ int get_inputs()
 	int noLine = 0;
 	int isWord = 1;
 	
-	
-
 
 	char line[10];
 
@@ -102,7 +139,7 @@ int get_inputs()
 				noOfWords++;
 			}
 
-			x = noOfWords;
+			//x = noOfWords;
 
 			if (flag1 == 0)
 			{
@@ -169,13 +206,23 @@ int get_inputs()
 
 
 		if (enterPressed == 1 || enterPressed == 2)
-		{
+		{                                                       // Creating the words array
 			strcpy(words[y],line);
 			y++;
 		}
 
+			
+		
+		
+
+
+	  	
+																							
+
+
+
 		if (noOfWords > sizeOfthePuzzle)
-		{
+		{                                          // If no. of words exceeds the size of the puzzel that is impossible
 			impossible = 1;
 			return 0;
 		}
@@ -195,7 +242,7 @@ void print_matrix()
 {
 
 	printf("Size of the matrix is  =  %d\n",sizeOfthePuzzle);
-	printf("%d\n%d\n%d\n",noOfWords,x,y);
+	//printf("%d\n%d\n%d\n",noOfWords,x,y);
 
 
 	for (int m = 0; m < sizeOfthePuzzle; m++)
@@ -213,7 +260,8 @@ void print_matrix()
 	for (int m = 1; m <= noOfWords; m++)
 	{
 
-		printf("%s",words[m]);
+		printf("Word no : %d %s",m,words[m]);
+		printf("Word Size : %d\n",strlen(words[m]));
 				
 	}
 
@@ -247,7 +295,9 @@ int Check_Similarities()
 
 void No_Similar_Words()
 {
-	int m;
+
+
+/*	int m;
 	int n;
 
 
@@ -285,7 +335,7 @@ void No_Similar_Words()
 							for (int j = 0, p = m; j < strlen(words[l]), p < strlen(words[l]); j++,p++)
 							{
 
-								if (coloumnVacant >= strlen(words[l]))
+								if (coloumnVacant >= strlen(words[l])) 
 								{
 									printMatrix[p][n] = words[l][j];
 								}
@@ -313,6 +363,89 @@ void No_Similar_Words()
 
 	}
 
+*/
+
+	
+	  	printf("Word List Sort\n");
+
+	  	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
+	  	{
+	  		printf("%s\n",words[m]);
+
+	
+
+}
+	int rowTotal = 0;
+	int columnTotal = 0;
+	int wordPrinted = 0;
+
+	int rows = 0;
+
+	for (int l = 1; l <= noOfWords; l++)
+	{
+		
+		printf("Word Loop \n");
+
+		printf("Size of the word %d\n",strlen(words[l]));
+
+		rows = 0;
+
+		while (rows < sizeOfthePuzzle)
+		{
+			printf("first loop\n");
+			printf("%s\n",words[l]);
+
+			rowTotal = 0;
+
+
+			for (int n = 0; n < sizeOfthePuzzle; n++)
+			{
+				rowTotal = rowTotal + matrix[rows][n];
+
+				printf(" Row : %d\n",rows);
+			}
+
+			printf("Row Total : %d\n",rowTotal);
+
+			if (rowTotal >= strlen(words[l]) - 1)
+			{
+				
+
+				for (int i = 0; i < sizeOfthePuzzle; i++)
+				{
+					if (matrix[rows][i] == 1)
+					{
+						for(int j = 0; j <strlen(words[l]) - 1; j++)
+						{
+							printMatrix[rows][i] = words[l][j];
+							matrix[rows][i] = 0;
+							i++;
+							printf("work\n");	
+						}
+
+						wordPrinted = 1;
+						break;	 
+					} 
+					
+					
+				}
+
+				if (wordPrinted == 1)
+				{
+					
+					break;
+				} 
+
+			}
+
+			rows++;
+
+			
+		}
+
+		wordPrinted = 0;
+
+	}
 
 
 
@@ -323,6 +456,44 @@ void Similar_Words()
 {
 
 	
+
+
+}
+
+void Sorting_Word_List()
+{
+
+	while (done == 0)
+  	{	
+	  		//printf("Go1\n");
+
+	  		counter = 0;
+
+	  		for (int n = 1; n < noOfWords; n++)
+	  		{
+	  			//printf("Go2\n");
+	  			if (strlen(words[n]) < strlen(words[n+1]))
+	  			{
+	  			//	printf("Go3\n");
+	  				strcpy(tempWord,words[n+1]);
+	  				strcpy(words[n+1],words[n]);			// Sort the word list
+	  				strcpy(words[n],tempWord);
+
+	  				counter++;
+	  			}
+	  			
+
+	  			
+	  		}
+
+	  		if (counter == 0)
+	  			{
+	  				done = 1;
+	  			}
+
+	  		
+	}
+
 
 
 }
