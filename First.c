@@ -22,6 +22,9 @@ int done = 0;
 	
 int counter = 0;
 
+int similar = 0;
+
+
 
 
 
@@ -66,7 +69,7 @@ int main()
 
 	if (Check_Similarities() > 0)
 	{
- 			// Words components are similar
+ 		printf("Similarities  : %d\n",similar);	// Words components are similar
 
 	}
 
@@ -74,6 +77,8 @@ int main()
 	else
 
 	{
+
+
 		Sorting_Word_List();
 
 		No_Similar_Words();
@@ -242,7 +247,7 @@ void print_matrix()
 {
 
 	printf("Size of the matrix is  =  %d\n",sizeOfthePuzzle);
-	//printf("%d\n%d\n%d\n",noOfWords,x,y);
+	printf("%d\n%d\n",noOfWords,y);
 
 
 	for (int m = 0; m < sizeOfthePuzzle; m++)
@@ -256,6 +261,12 @@ void print_matrix()
 
 	}
 
+	printf("Word List Sort\n");
+
+	  	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
+	  	{
+	  		printf("%s\n",words[m]);
+		}
 
 	for (int m = 1; m <= noOfWords; m++)
 	{
@@ -271,16 +282,23 @@ void print_matrix()
 
 int Check_Similarities()
 {
-	int similar = 0;
+	similar = 0;
 
-	for (int m = 0; m < noOfWords - 1; m++)
+	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
 	{
-		for (int n , k = 0; n < strlen(words[m]), k < strlen(words[m+1]); n++, k++)
+		for (int n = 0, k = 0; n < strlen(words[m]), k < strlen(words[m+1]); n++, k++)
 		{
 
-			if (words[m][n] == words[m+1][k])
+			if (words[m][n] == words[m+1][k] && words[m][n] != '\n' && words[m][n] != '\0' && words[m][n] != ' ' && strlen(words[m]) > 0)
 			{
 				similar ++;
+
+				/*printf("%d\n",m);
+				printf("%s and %s\n",words[m],words[m+1]);
+				printf("Lengths : %d and %d\n",strlen(words[m]),strlen(words[m+1]));
+				printf("n and k : %d and %d\n",n,k);
+				printf("%c and %c\n",words[m][n],words[m+1][k] );
+				printf("similar\n");*/
 
 			}
 		}
@@ -297,73 +315,7 @@ void No_Similar_Words()
 {
 
 
-/*	int m;
-	int n;
 
-
-
-	for (m = 0; m < sizeOfthePuzzle; m++)
-	{
-		for (n = 0; n < sizeOfthePuzzle; n++)
-		{
-
-			if (matrix[m][n] == 1)
-			{
-
-				for(int k = n,i = m; k < sizeOfthePuzzle, i < sizeOfthePuzzle; k++, i++)
-				{
-
-					if (matrix[m][k] == 1)
-					{
-						rowVacant ++;
-					}
-
-					if (matrix[i][n] == 1)
-					{
-						coloumnVacant ++;
-					}
-
-					if (rowVacant > 1)
-					{
-
-					}
-					else if (coloumnVacant > 1)
-					{
-
-						for (int l = 0; l < noOfWords; l++)
-						{
-							for (int j = 0, p = m; j < strlen(words[l]), p < strlen(words[l]); j++,p++)
-							{
-
-								if (coloumnVacant >= strlen(words[l])) 
-								{
-									printMatrix[p][n] = words[l][j];
-								}
-
-							}
-					
-						}
-
-					} 
-
-
-
-				}
-				printf("Row : %d\n",rowVacant);
-				printf("Column : %d\n",coloumnVacant);
-
-				
-
-
-			}
-
-
-		}
-
-
-	}
-
-*/
 
 	
 	  	printf("Word List Sort\n");
@@ -380,6 +332,9 @@ void No_Similar_Words()
 	int wordPrinted = 0;
 
 	int rows = 0;
+	int colomns = 0;
+
+	int rowPrint = 0;
 
 	for (int l = 1; l <= noOfWords; l++)
 	{
@@ -400,6 +355,7 @@ void No_Similar_Words()
 
 			for (int n = 0; n < sizeOfthePuzzle; n++)
 			{
+
 				rowTotal = rowTotal + matrix[rows][n];
 
 				printf(" Row : %d\n",rows);
@@ -424,15 +380,15 @@ void No_Similar_Words()
 						}
 
 						wordPrinted = 1;
-						break;	 
+						break;	
+						rowPrint = 1; 
 					} 
 					
 					
 				}
 
 				if (wordPrinted == 1)
-				{
-					
+				{					
 					break;
 				} 
 
@@ -448,6 +404,78 @@ void No_Similar_Words()
 	}
 
 
+	wordPrinted = 0;
+
+	if (rowPrint = 0)
+	{
+
+		for (int l = 1; l <= noOfWords; l++)
+		{
+			
+			printf("Word Loop \n");
+
+			printf("Size of the word %d\n",strlen(words[l]));
+
+			colomns = 0;
+
+			while (colomns < sizeOfthePuzzle)
+			{
+				printf("first loop\n");
+				printf("%s\n",words[l]);
+
+				columnTotal = 0;
+
+
+				for (int n = 0; n < sizeOfthePuzzle; n++)
+				{
+					columnTotal = columnTotal + matrix[n][colomns];
+
+					printf("Column : %d\n",colomns);
+				}
+
+				printf("Column Total : %d\n",columnTotal);
+
+				if (columnTotal >= strlen(words[l]) - 1)
+				{
+					
+
+					for (int i = 0; i < sizeOfthePuzzle; i++)
+					{
+						if (matrix[i][colomns] == 1)
+						{
+							for(int j = 0; j <strlen(words[l]) - 1; j++)
+							{
+								printMatrix[i][colomns] = words[l][j];
+								matrix[i][colomns] = 0;
+								i++;
+								printf("work\n");	
+							}
+
+							wordPrinted = 1;
+							break;	 
+						} 
+						
+						
+					}
+
+					if (wordPrinted == 1)
+					{
+						
+						break;
+					} 
+
+				}
+
+				colomns++;
+
+				
+			}
+
+			wordPrinted = 0;
+
+		}
+
+	}
 
 }
 
