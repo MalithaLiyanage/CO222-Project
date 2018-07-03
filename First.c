@@ -39,7 +39,7 @@ void print_matrix();
 int Check_Similarities();
 void No_Similar_Words();
 void Sorting_Word_List();
-
+int Is_Similar();
 
 
 int main()
@@ -79,12 +79,10 @@ int main()
 	{
 
 
-		Sorting_Word_List();
+		Sorting_Word_List();  // Words are sorted for easyness
+		No_Similar_Words();   
 
-		No_Similar_Words();
-
-													// Words' components aren't similar
-
+													// Words' components aren't simila
 		printf("Printing Matrix\n");
 
 		for (int m = 0; m < sizeOfthePuzzle; m++)
@@ -102,8 +100,7 @@ int main()
 	
 	
 	print_matrix();
-
-
+	
 	printf("Yes\n"); 
 
 	return 0;
@@ -308,6 +305,32 @@ int Check_Similarities()
 
 }
 
+int Is_Similar()
+{
+	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
+	{
+		for (int n = 0, k = 0; n < strlen(words[m]), k < strlen(words[m+1]); n++, k++)
+		{
+
+			if (words[m][n] == words[m+1][k] && words[m][n] != '\n' && words[m][n] != '\0' && words[m][n] != ' ' && strlen(words[m]) > 0)
+			{
+				similar ++;
+
+			}
+		}
+
+		if (similar == 1)
+		{
+			return m, n, k;
+		}
+
+		similar = 0;
+	}
+
+
+	
+}
+
 
 
 
@@ -377,11 +400,12 @@ void No_Similar_Words()
 							matrix[rows][i] = 0;
 							i++;
 							printf("work\n");	
+							rowPrint = 1; 
 						}
 
 						wordPrinted = 1;
 						break;	
-						rowPrint = 1; 
+						
 					} 
 					
 					
@@ -403,11 +427,12 @@ void No_Similar_Words()
 
 	}
 
-
+	printf("%d\n",rowPrint);
 	wordPrinted = 0;
 
-	if (rowPrint = 0)
+	if (rowPrint == 0)
 	{
+		printf("Column initiation\n");
 
 		for (int l = 1; l <= noOfWords; l++)
 		{
@@ -480,13 +505,17 @@ void No_Similar_Words()
 }
 
 
-void Similar_Words()
+/*void Similar_Words()
 {
+	for (int n = 0; n < sizeof(words)/sizeof(char *); n++)
+	{
+		if (Is_Similar() > )
 
+	}
 	
 
 
-}
+}*/
 
 void Sorting_Word_List()
 {
