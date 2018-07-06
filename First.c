@@ -25,7 +25,7 @@ int counter = 0;
 int similar = 0;
 
 
-
+int noLine = 0;
 
 
 int rowVacant = 1;
@@ -47,6 +47,11 @@ int main()
 
 	get_inputs();   // Getting inputs Turning to capitals And storing in words and matrix matrices
 	
+	
+
+	//printf("Size of the puzzle : %d\n",sizeOfthePuzzle);
+
+
 	if (impossible == 1)
 	{
 		printf("IMPOSSIBLE\n");
@@ -58,9 +63,15 @@ int main()
 	{
 		for (int n = 0; n < sizeOfthePuzzle; n++)
 		{
+			if (matrix[m][n] == 3)
+			{
 			
-				printMatrix[m][n] = '*';
-				
+				printMatrix[m][n] = '*';			// Creating the Printing Matrix according to the given input (line by line)
+			}
+			else if (matrix[m][n] == 1)
+			{
+				printMatrix[m][n] = '#';
+			}	
 			
 		}
 	}
@@ -70,6 +81,12 @@ int main()
 	if (Check_Similarities() > 0)
 	{
  		printf("Similarities  : %d\n",similar);	// Words components are similar
+
+ 		if (noOfWords == 2)
+ 		{
+
+ 			printf("Yesq\n");
+ 		}
 
 	}
 
@@ -82,8 +99,8 @@ int main()
 		Sorting_Word_List();  // Words are sorted for easyness
 		No_Similar_Words();   
 
-													// Words' components aren't simila
-		printf("Printing Matrix\n");
+													           // Words' components aren't simila
+		//printf("Printing Matrix\n");
 
 		for (int m = 0; m < sizeOfthePuzzle; m++)
 		{
@@ -92,16 +109,20 @@ int main()
 				printf("%c",printMatrix[m][n]);
 				
 			}
+
+			if (printMatrix[m][0] != '\0')
+			{
 			printf("\n");
+		    }
 
 		}
 
 	}
 	
 	
-	print_matrix();
+	//print_matrix();
 	
-	printf("Yes\n"); 
+	//printf("Yes\n"); 
 
 	return 0;
 }
@@ -112,7 +133,7 @@ int get_inputs()
 
 	int enterPressed = 0;
 	int flag1 = 0;
-	int noLine = 0;
+	
 	int isWord = 1;
 	
 
@@ -125,6 +146,8 @@ int get_inputs()
 
 
 		fgets(line,sizeof(line),stdin);
+
+		//printf("Line Length : %d\n",strlen(line) - 1);
 
 
 
@@ -143,19 +166,22 @@ int get_inputs()
 
 			//x = noOfWords;
 
-			if (flag1 == 0)
+			if (enterPressed == 0 && sizeOfthePuzzle < strlen(line) - 1)
 			{
 				flag1 = 1;
 				sizeOfthePuzzle = strlen(line) - 1;
 
-				for (int m = 0; m < sizeOfthePuzzle; m++)
+				/*for (int m = 0; m < sizeOfthePuzzle; m++)
 				{
 					for (int n = 0; n < sizeOfthePuzzle; n++)
 					{
 						matrix[m][n] = 2;                           // Giving 2 for the all values of the 10 x 10 matrix
 					}
-				}
+				}*/
 			}
+
+
+			
 
 
 			for (int n = 0; n < sizeOfthePuzzle; n++)
@@ -167,15 +193,18 @@ int get_inputs()
 
 			}
 
-			if (strlen(line) - 1 > sizeOfthePuzzle && flag1 == 1)
+			if ((strlen(line) - 1 > sizeOfthePuzzle && strlen(line) - 1 > noLine) && flag1 == 1 && (enterPressed == 1 || enterPressed == 2))
 			{
 				impossible = 1;
-				printf("go1");
-				printf("Line Length : %ld\n",strlen(line));
-				printf("Size of the puzzle : %d\n",sizeOfthePuzzle);
+				//printf("hui\n");
+			//	printf("Size of the Puzzle : %d\n",sizeOfthePuzzle);
+			//	printf("No line : %d\n",noLine);
+			//	printf("go1");
+			//	printf("Line Length : %ld\n",strlen(line));
+			///	printf("Size of the puzzle : %d\n",sizeOfthePuzzle);
 			}
 
-			for (int n = 0; n < sizeOfthePuzzle; n++)
+			/*for (int n = 0; n < sizeOfthePuzzle; n++)
 				{
 					if (line[n] >= 65 && line[n] <= 90)
 					{
@@ -186,24 +215,31 @@ int get_inputs()
 						isWord = 0;
 					}	
 
-				}
+				}*/
 
 
-			for (int n = 0; n < sizeOfthePuzzle; n++)
+			if (enterPressed == 0)
+			{
+
+			for (int n = 0; n < strlen(line) - 1; n++)
 				{
+
+					//printf("work2\n");
+
+					
 					if (line[n] == 35)
 					{
 						matrix[noLine][n] = 1;
 					}                                          // Creating the matrix 1 for vacants 0 for non vacant
-					else 
+					else
 					{
-						matrix[noLine][n] = 0;
+						matrix[noLine][n] = 3;
 					}
 
 				}
 
 				noLine ++;	
-
+			}
 		}
 
 
@@ -268,8 +304,8 @@ void print_matrix()
 	for (int m = 1; m <= noOfWords; m++)
 	{
 
-		printf("Word no : %d %s",m,words[m]);
-		printf("Word Size : %d\n",strlen(words[m]));
+		//printf("Word no : %d %s",m,words[m]);
+		//printf("Word Size : %d\n",strlen(words[m]));
 				
 	}
 
@@ -305,7 +341,7 @@ int Check_Similarities()
 
 }
 
-int Is_Similar()
+/*int Is_Similar()
 {
 	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
 	{
@@ -329,19 +365,15 @@ int Is_Similar()
 
 
 	
-}
+}*/
 
 
 
 
 void No_Similar_Words()
 {
-
-
-
-
 	
-	  	printf("Word List Sort\n");
+	  	/*printf("Word List Sort\n");
 
 	  	for (int m = 0; m < sizeof(words)/sizeof(char *); m++)
 	  	{
@@ -349,7 +381,7 @@ void No_Similar_Words()
 
 	
 
-}
+}*/
 	int rowTotal = 0;
 	int columnTotal = 0;
 	int wordPrinted = 0;
@@ -362,29 +394,30 @@ void No_Similar_Words()
 	for (int l = 1; l <= noOfWords; l++)
 	{
 		
-		printf("Word Loop \n");
+	//	printf("Word Loop \n");
 
-		printf("Size of the word %d\n",strlen(words[l]));
+	//	printf("Size of the word %d\n",strlen(words[l]));
 
 		rows = 0;
 
 		while (rows < sizeOfthePuzzle)
 		{
-			printf("first loop\n");
-			printf("%s\n",words[l]);
+		//	printf("first loop\n");
+		//	printf("%s\n",words[l]);
 
 			rowTotal = 0;
 
 
 			for (int n = 0; n < sizeOfthePuzzle; n++)
 			{
-
+				if (matrix[rows][n] == 1)
+				{
 				rowTotal = rowTotal + matrix[rows][n];
-
-				printf(" Row : %d\n",rows);
+				}
+			//	printf(" Row : %d\n",rows);
 			}
 
-			printf("Row Total : %d\n",rowTotal);
+			//printf("Row Total : %d\n",rowTotal);
 
 			if (rowTotal >= strlen(words[l]) - 1)
 			{
@@ -392,14 +425,14 @@ void No_Similar_Words()
 
 				for (int i = 0; i < sizeOfthePuzzle; i++)
 				{
-					if (matrix[rows][i] == 1)
+					if (matrix[rows][i] == 1 && matrix[rows][i+1] == 1)
 					{
 						for(int j = 0; j <strlen(words[l]) - 1; j++)
 						{
 							printMatrix[rows][i] = words[l][j];
 							matrix[rows][i] = 0;
 							i++;
-							printf("work\n");	
+						//	printf("work\n");	
 							rowPrint = 1; 
 						}
 
@@ -427,19 +460,23 @@ void No_Similar_Words()
 
 	}
 
-	printf("%d\n",rowPrint);
+	//printf("%d\n",rowPrint);
 	wordPrinted = 0;
 
 	if (rowPrint == 0)
 	{
-		printf("Column initiation\n");
+		if (sizeOfthePuzzle < noLine)
+		{
+			sizeOfthePuzzle = noLine;
+		}
+	//	printf("Column initiation\n");
 
 		for (int l = 1; l <= noOfWords; l++)
 		{
 			
-			printf("Word Loop \n");
+			//printf("Word Loop \n");
 
-			printf("Size of the word %d\n",strlen(words[l]));
+			//printf("Size of the word %d\n",strlen(words[l] - 1));
 
 			colomns = 0;
 
@@ -453,12 +490,14 @@ void No_Similar_Words()
 
 				for (int n = 0; n < sizeOfthePuzzle; n++)
 				{
-					columnTotal = columnTotal + matrix[n][colomns];
-
+					if (matrix[n][colomns] == 1)
+					{
+						columnTotal = columnTotal + matrix[n][colomns];
+					}
 					printf("Column : %d\n",colomns);
 				}
 
-				printf("Column Total : %d\n",columnTotal);
+				("Column Total : %d\n",columnTotal);
 
 				if (columnTotal >= strlen(words[l]) - 1)
 				{
@@ -473,7 +512,7 @@ void No_Similar_Words()
 								printMatrix[i][colomns] = words[l][j];
 								matrix[i][colomns] = 0;
 								i++;
-								printf("work\n");	
+								//printf("work\n");	
 							}
 
 							wordPrinted = 1;
